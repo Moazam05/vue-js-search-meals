@@ -47,6 +47,9 @@ const addToCart = (meal) => {
             <strong>Category:</strong> {{ meal.strCategory }}
           </p>
           <p class="text-gray-600"><strong>Area:</strong> {{ meal.strArea }}</p>
+          <p class="text-gray-600">
+            <strong>Tags:</strong> {{ meal.strTags.split(",")[0] }}
+          </p>
         </div>
 
         <div class="mt-3">

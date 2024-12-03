@@ -37,7 +37,7 @@ const addToCart = (meal) => {
       <input
         type="text"
         class="rounded border-2 border-gray-300 w-full py-2 px-4 text-gray-700"
-        placeholder="Search for Meals"
+        placeholder="Enter meal name & press Enter"
         v-model="keyword"
         @change="searchMeals"
       />
