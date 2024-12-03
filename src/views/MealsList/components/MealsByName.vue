@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import axiosClient from "../../../api/axiosClient.js";
+import { formatNumberWithSeparator } from "../../../utils/index.js";
 
 const keyword = ref("");
 const meals = ref([]);
@@ -42,7 +43,7 @@ const addToCart = (meal) => {
         <img
           :src="meal.strMealThumb"
           :alt="meal.strMeal"
-          class="w-full h-40 object-cover"
+          class="w-full h-52 object-cover"
         />
 
         <div class="p-4">
@@ -51,6 +52,15 @@ const addToCart = (meal) => {
           </h3>
           <p class="text-sm text-gray-600 truncate">
             Category: {{ meal.strCategory }}
+          </p>
+
+          <p class="text-sm text-gray-600 mt-3">
+            Description: {{ meal.strInstructions.slice(0, 80)
+            }}{{ meal.strInstructions.length > 80 ? "..." : "" }}
+          </p>
+
+          <p class="text-sm text-gray-600 mt-3 font-bold">
+            Price: {{ formatNumberWithSeparator(meal.idMeal) }}
           </p>
         </div>
 
@@ -66,7 +76,7 @@ const addToCart = (meal) => {
     </div>
 
     <p v-if="meals.length === 0 && keyword" class="text-gray-500 mt-4">
-      No meals found for "{{ keyword }}".
+      No meals found for "{{ keyword }}"
     </p>
   </div>
 </template>
