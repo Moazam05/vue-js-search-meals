@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <router-view />
+  <h1 class="text-3xl font-bold underline">Home Component!</h1>
 </template>
 
 <style scoped></style>
