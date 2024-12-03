@@ -16,15 +16,7 @@ const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
 <template>
   <div class="flex flex-col items-center p-8 min-h-screen bg-gray-50">
-    <div class="w-full max-w-md">
-      <input
-        type="text"
-        class="rounded border-2 border-gray-300 w-full py-2 px-4 text-gray-700"
-        placeholder="Search for Meals"
-      />
-    </div>
-
-    <div class="flex flex-wrap justify-center mt-8">
+    <div class="flex flex-wrap justify-center">
       <router-link
         v-for="letter in letters"
         :key="letter"
