@@ -1,7 +1,13 @@
-<script setup></script>
+<script setup>
+import { computed } from "vue";
+import store from "../../store";
 
+const meals = computed(() => store.state.meals);
+</script>
+
+<!-- todo: Template -->
 <template>
-  <h1 class="text-3xl font-bold underline">Home Component!</h1>
+  <input type="text" />
 </template>
 
 <style scoped></style>
