@@ -1,7 +1,6 @@
 <script setup>
 import { useRouter } from "vue-router";
 
-// Router instance for programmatic navigation
 const router = useRouter();
 
 const navigate = (path) => {
@@ -23,25 +22,23 @@ const navigate = (path) => {
           @click="navigate('/name')"
           class="hover:bg-blue-700 px-4 py-2 rounded transition"
         >
-          Search By Name
+          Search Meals
         </button>
         <button
           @click="navigate('/letter')"
           class="hover:bg-blue-700 px-4 py-2 rounded transition"
         >
-          Search By Letter
+          Meals By Letter
         </button>
         <button
-          @click="navigate('/ingredients')"
+          @click="navigate('/ingredient')"
           class="hover:bg-blue-700 px-4 py-2 rounded transition"
         >
-          Search By Ingredients
+          Meals By Ingredients
         </button>
       </div>
     </div>
   </nav>
 </template>
 
-<style scoped>
-/* Additional styling can go here */
-</style>
+<style scoped></style>
