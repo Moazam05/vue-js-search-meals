@@ -1,10 +1,21 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
+
 import axiosClient from "../../../api/axiosClient.js";
 import { formatNumberWithSeparator } from "../../../utils/index.js";
 
+const route = useRoute();
+
 const keyword = ref("");
 const meals = ref([]);
+
+onMounted(() => {
+  if (route.params.name) {
+    keyword.value = route.params.name;
+    searchMeals();
+  }
+});
 
 const searchMeals = async () => {
   try {
@@ -28,17 +39,18 @@ const addToCart = (meal) => {
         class="rounded border-2 border-gray-300 w-full py-2 px-4 text-gray-700"
         placeholder="Search for Meals"
         v-model="keyword"
-        @keyup.enter="searchMeals"
+        @change="searchMeals"
       />
     </div>
 
     <div
       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-6xl p-4"
     >
-      <div
+      <router-link
         v-for="meal in meals"
         :key="meal.idMeal"
         class="bg-white rounded-lg shadow-md overflow-hidden"
+        :to="`/meal/${meal.idMeal}`"
       >
         <img
           :src="meal.strMealThumb"
@@ -72,7 +84,7 @@ const addToCart = (meal) => {
             Add to Cart
           </button>
         </div>
-      </div>
+      </router-link>
     </div>
 
     <p v-if="meals.length === 0 && keyword" class="text-gray-500 mt-4">
