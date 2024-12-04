@@ -1,22 +1,30 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
+
+// <!-- todo: Custom Import -->
 import axiosClient from "../../../api/axiosClient";
+import Loader from "../../../components/Loader/index.vue";
 
 const route = useRoute();
 const router = useRouter();
 
 // <!-- todo: State -->
 const meals = ref([]);
+const isLoading = ref(false);
+
 const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
 // Fetch meals by the selected letter
 const fetchMealsByLetter = async (letter) => {
   try {
+    isLoading.value = true;
     const response = await axiosClient.get(`search.php?f=${letter}`);
     meals.value = response.data.meals || [];
   } catch (error) {
     console.error("Error fetching meals by letter:", error);
+  } finally {
+    isLoading.value = false;
   }
 };
 
@@ -49,8 +57,13 @@ const navigateToLetter = (letter) => {
       </button>
     </div>
 
+    <div v-if="isLoading" class="mt-8">
+      <Loader :visible="isLoading" />
+    </div>
+
     <!-- Meal Cards -->
     <div
+      v-else
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl"
     >
       <div
@@ -78,6 +91,17 @@ const navigateToLetter = (letter) => {
           </button>
         </div>
       </div>
+    </div>
+
+    <!-- No Meals Found -->
+    <div v-if="!isLoading && !meals.length" class="mt-8">
+      <p class="text-gray-600">
+        No meals found for this letter
+
+        <strong>
+          {{ route.params.letter }}
+        </strong>
+      </p>
     </div>
   </div>
 </template>
