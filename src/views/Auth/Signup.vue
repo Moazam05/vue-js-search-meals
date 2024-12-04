@@ -34,54 +34,59 @@ const goToLogin = () => {
 </script>
 
 <template>
-  <v-container>
-    <v-row class="fill-height" align="center" justify="center">
-      <v-col cols="12" md="6">
-        <v-card>
-          <v-card-title>
-            <span class="headline">Sign Up</span>
-          </v-card-title>
+  <div class="flex justify-center items-center h-[calc(100vh-100px)]">
+    <v-card class="w-[550px]">
+      <v-card-title class="mb-4">
+        <span class="headline">Sign Up</span>
+      </v-card-title>
 
-          <v-card-text>
-            <v-form v-model="valid" ref="form" lazy-validation>
-              <v-text-field
-                v-model="name"
-                :rules="nameRules"
-                label="Full Name"
-                placeholder="Enter your full name"
-                required
-              ></v-text-field>
+      <v-card-text>
+        <v-form v-model="valid" ref="form" lazy-validation>
+          <v-text-field
+            v-model="name"
+            :rules="nameRules"
+            label="Full Name"
+            placeholder="Enter your full name"
+            required
+            class="mb-2 pa-0"
+          ></v-text-field>
 
-              <v-text-field
-                v-model="email"
-                :rules="emailRules"
-                label="Email"
-                placeholder="Enter your email"
-                required
-              ></v-text-field>
+          <v-text-field
+            v-model="email"
+            :rules="emailRules"
+            label="Email"
+            placeholder="Enter your email"
+            required
+            class="mb-2 pa-0"
+          ></v-text-field>
 
-              <v-text-field
-                v-model="password"
-                :rules="passwordRules"
-                label="Password"
-                type="password"
-                placeholder="Enter your password"
-                required
-              ></v-text-field>
+          <v-text-field
+            v-model="password"
+            :rules="passwordRules"
+            label="Password"
+            type="password"
+            placeholder="Enter your password"
+            required
+            class="mb-2 pa-0"
+          ></v-text-field>
 
-              <v-btn :disabled="!valid" @click="signup" color="primary" block>
-                Sign Up
-              </v-btn>
-            </v-form>
-          </v-card-text>
+          <v-btn :disabled="!valid" @click="signup" color="primary mt-8" block>
+            Sign Up
+          </v-btn>
+        </v-form>
+      </v-card-text>
 
-          <v-card-actions>
-            <v-btn text @click="goToLogin"
-              >Already have an account? Login</v-btn
-            >
-          </v-card-actions>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+      <v-card-actions class="justify-end">
+        <v-btn text class="text-capitalize" @click="goToLogin"
+          >Already have an account? Login</v-btn
+        >
+      </v-card-actions>
+    </v-card>
+  </div>
 </template>
+
+<style scoped>
+.v-text-field .v-input__details {
+  padding: 0 !important;
+}
+</style>

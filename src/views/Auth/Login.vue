@@ -72,3 +72,9 @@ const goToSignup = () => {
     </v-card>
   </div>
 </template>
+
+<style scoped>
+.v-text-field .v-input__details {
+  padding: 0 !important;
+}
+</style>
