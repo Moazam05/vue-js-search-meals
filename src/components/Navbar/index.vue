@@ -1,11 +1,16 @@
 <script setup>
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+import { computed } from "vue";
 
 const router = useRouter();
+const store = useStore();
 
 const navigate = (path) => {
   router.push(path);
 };
+
+const cartItemCount = computed(() => store.getters.cartItemCount || 0);
 </script>
 
 <template>
@@ -30,6 +35,21 @@ const navigate = (path) => {
         >
           Meals By Letter
         </button>
+
+        <div
+          class="relative flex items-center cursor-pointer hover:text-blue-300 transition"
+        >
+          <!-- Cart Icon -->
+          <i class="pi pi-shopping-cart text-2xl"></i>
+
+          <!-- Badge for item count -->
+          <span
+            v-if="cartItemCount > 0"
+            class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full"
+          >
+            {{ cartItemCount }}
+          </span>
+        </div>
       </div>
     </div>
   </nav>
