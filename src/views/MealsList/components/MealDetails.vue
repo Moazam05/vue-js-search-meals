@@ -3,17 +3,24 @@ import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 
 import axiosClient from "../../../api/axiosClient";
+import Loader from "../../../components/Loader/index.vue";
 
 const route = useRoute();
+
+// <!-- todo: State -->
 const meal = ref(null);
+const isLoading = ref(true);
 
 // Fetch meal details on mount
 onMounted(async () => {
   try {
+    isLoading.value = true;
     const response = await axiosClient.get(`lookup.php?i=${route.params.id}`);
     meal.value = response.data.meals[0] || {};
   } catch (error) {
     console.error("Error fetching meal details:", error);
+  } finally {
+    isLoading.value = false;
   }
 });
 
@@ -24,7 +31,9 @@ const addToCart = (meal) => {
 
 <template>
   <div class="flex flex-col items-center p-6 min-h-screen bg-gray-50 mt-4">
-    <p v-if="!meal" class="text-gray-500 text-lg">Loading meal details...</p>
+    <div v-if="isLoading" class="mt-8">
+      <Loader :visible="isLoading" />
+    </div>
 
     <div
       v-else
@@ -54,7 +63,9 @@ const addToCart = (meal) => {
 
         <div class="mt-3">
           <p class="text-gray-600">
-            <strong>Instructions:</strong> {{ meal.strInstructions }}
+            <strong>Instructions:</strong>
+            {{ meal.strInstructions.slice(0, 550)
+            }}{{ meal.strInstructions.length > 550 ? "..." : "" }}
           </p>
         </div>
 

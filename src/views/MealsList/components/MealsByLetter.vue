@@ -6,6 +6,7 @@ import axiosClient from "../../../api/axiosClient";
 const route = useRoute();
 const router = useRouter();
 
+// <!-- todo: State -->
 const meals = ref([]);
 const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 

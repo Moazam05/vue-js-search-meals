@@ -11,7 +11,7 @@ const route = useRoute();
 
 // <!-- todo: State -->
 const keyword = ref("");
-const isLoading = ref(true);
+const isLoading = ref(false);
 const meals = ref([]);
 
 onMounted(() => {
