@@ -56,7 +56,7 @@ const isInCart = (meal) =>
   <div class="flex flex-col items-center min-h-screen bg-gray-50">
     <!-- Search Input -->
     <div class="w-full max-w-lg p-8">
-      <v-card class="mx-auto" color="surface-light" max-width="400">
+      <v-card class="mx-auto" color="surface-light" max-width="700">
         <v-card-text>
           <v-text-field
             :loading="isLoading"
