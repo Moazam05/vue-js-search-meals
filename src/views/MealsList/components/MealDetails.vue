@@ -1,11 +1,13 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 import { useRoute } from "vue-router";
+import { useStore } from "vuex";
 
 import axiosClient from "../../../api/axiosClient";
 import Loader from "../../../components/Loader/index.vue";
 
 const route = useRoute();
+const store = useStore();
 
 // <!-- todo: State -->
 const meal = ref(null);
@@ -24,8 +26,13 @@ onMounted(async () => {
   }
 });
 
+const cartItems = computed(() => store.getters.cartItems);
+const cartItemCount = computed(() => store.getters.cartItemCount);
+
+console.log("cartItems", cartItems.value);
+
 const addToCart = (meal) => {
-  console.log(`Added to cart: ${meal.strMeal}`);
+  store.dispatch("addToCart", meal);
 };
 </script>
 

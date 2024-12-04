@@ -1,3 +1,3 @@
 export default {
-  meals: ["breakfast", "lunch", "dinner"],
+  cart: JSON.parse(localStorage.getItem("cart")) || [],
 };
