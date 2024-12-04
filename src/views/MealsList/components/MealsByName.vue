@@ -22,6 +22,11 @@ onMounted(() => {
 });
 
 const searchMeals = async () => {
+  if (!keyword.value.trim()) {
+    meals.value = [];
+    return;
+  }
+
   try {
     isLoading.value = true;
     const response = await axiosClient.get(`search.php?s=${keyword.value}`);
@@ -51,7 +56,7 @@ const searchMeals = async () => {
     </div>
 
     <div
-      v-if="!isLoading"
+      v-if="!isLoading && meals.length > 0"
       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-6xl p-4"
     >
       <router-link
