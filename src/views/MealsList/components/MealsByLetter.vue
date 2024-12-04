@@ -94,7 +94,7 @@ const navigateToLetter = (letter) => {
     </div>
 
     <!-- No Meals Found -->
-    <div v-if="!isLoading && !meals.length" class="mt-8">
+    <div v-if="!isLoading && !meals.length && route.params.letter" class="mt-8">
       <p class="text-gray-600">
         No meals found for this letter
 
