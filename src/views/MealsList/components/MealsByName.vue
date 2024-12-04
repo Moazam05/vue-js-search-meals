@@ -2,12 +2,16 @@
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 
+// <!-- todo: Custom Imports -->
 import axiosClient from "../../../api/axiosClient.js";
 import { formatNumberWithSeparator } from "../../../utils/index.js";
+import Loader from "../../../components/Loader/index.vue";
 
 const route = useRoute();
 
+// <!-- todo: State -->
 const keyword = ref("");
+const isLoading = ref(true);
 const meals = ref([]);
 
 onMounted(() => {
@@ -19,15 +23,14 @@ onMounted(() => {
 
 const searchMeals = async () => {
   try {
+    isLoading.value = true;
     const response = await axiosClient.get(`search.php?s=${keyword.value}`);
     meals.value = response.data.meals || [];
   } catch (error) {
     console.error("Error fetching meals:", error);
+  } finally {
+    isLoading.value = false;
   }
-};
-
-const addToCart = (meal) => {
-  console.log(`Added to cart: ${meal.strMeal}`);
 };
 </script>
 
@@ -43,7 +46,12 @@ const addToCart = (meal) => {
       />
     </div>
 
+    <div v-if="isLoading" class="mt-8">
+      <Loader :visible="isLoading" />
+    </div>
+
     <div
+      v-if="!isLoading"
       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-6xl p-4"
     >
       <router-link
@@ -78,16 +86,18 @@ const addToCart = (meal) => {
 
         <div class="p-4">
           <button
-            @click="addToCart(meal)"
             class="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
           >
-            Add to Cart
+            Meal Details
           </button>
         </div>
       </router-link>
     </div>
 
-    <p v-if="meals.length === 0 && keyword" class="text-gray-500 mt-4">
+    <p
+      v-if="meals.length === 0 && keyword && !isLoading"
+      class="text-gray-500 mt-4"
+    >
       No meals found for "{{ keyword }}"
     </p>
   </div>
