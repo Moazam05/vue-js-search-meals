@@ -2,18 +2,23 @@
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import axiosClient from "../../api/axiosClient";
+import Loader from "../../components/Loader/index.vue";
 
-// State to hold categories
-const categories = ref([]);
 const router = useRouter();
+// State
+const categories = ref([]);
+const isLoading = ref(true);
 
 // Fetch categories data from API
 const fetchCategories = async () => {
   try {
+    isLoading.value = true;
     const response = await axiosClient.get("categories.php");
     categories.value = response.data.categories || [];
   } catch (error) {
     console.error("Error fetching categories:", error);
+  } finally {
+    isLoading.value = false;
   }
 };
 
@@ -33,8 +38,12 @@ const navigateToCategory = (category) => {
       Explore Meal Categories
     </h1>
 
+    <!-- Reusable Loader Component -->
+    <Loader :visible="isLoading" />
+
     <!-- Categories Grid -->
     <div
+      v-if="!isLoading"
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl"
     >
       <div
