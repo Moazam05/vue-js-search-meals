@@ -13,6 +13,7 @@ const route = useRoute();
 const keyword = ref("");
 const isLoading = ref(false);
 const meals = ref([]);
+const hasSearched = ref(false);
 
 onMounted(() => {
   if (route.params.name) {
@@ -24,9 +25,11 @@ onMounted(() => {
 const searchMeals = async () => {
   if (!keyword.value.trim()) {
     meals.value = [];
+    hasSearched.value = false;
     return;
   }
 
+  hasSearched.value = true;
   try {
     isLoading.value = true;
     const response = await axiosClient.get(`search.php?s=${keyword.value}`);
@@ -35,6 +38,7 @@ const searchMeals = async () => {
     console.error("Error fetching meals:", error);
   } finally {
     isLoading.value = false;
+    hasSearched.value = true;
   }
 };
 </script>
@@ -100,7 +104,7 @@ const searchMeals = async () => {
     </div>
 
     <p
-      v-if="meals.length === 0 && keyword && !isLoading"
+      v-if="meals.length === 0 && hasSearched && !isLoading"
       class="text-gray-500 mt-4"
     >
       No meals found for "{{ keyword }}"
