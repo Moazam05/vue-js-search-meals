@@ -30,12 +30,6 @@ const navigate = (path) => {
         >
           Meals By Letter
         </button>
-        <button
-          @click="navigate('/ingredient')"
-          class="hover:bg-blue-700 px-4 py-2 rounded transition"
-        >
-          Meals By Ingredients
-        </button>
       </div>
     </div>
   </nav>
