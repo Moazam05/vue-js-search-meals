@@ -13,7 +13,7 @@ const store = useStore();
 const meal = ref(null);
 const isLoading = ref(true);
 
-// Fetch meal details on mount
+// <!-- todo: Fetch Meal API -->
 onMounted(async () => {
   try {
     isLoading.value = true;
@@ -26,22 +26,40 @@ onMounted(async () => {
   }
 });
 
+// <!-- todo: VUEX -->
 const cartItems = computed(() => store.getters.cartItems);
-const cartItemCount = computed(() => store.getters.cartItemCount);
 
-console.log("cartItems", cartItems.value);
+// Check if the current meal is in the cart
+const cartItem = computed(() =>
+  cartItems.value.find((item) => item.idMeal === meal.value?.idMeal)
+);
 
-const addToCart = (meal) => {
-  store.dispatch("addToCart", meal);
+// Cart Actions
+const addToCart = () => {
+  store.dispatch("addToCart", meal.value);
+};
+
+const incrementQuantity = () => {
+  if (cartItem.value) {
+    store.dispatch("incrementQuantity", cartItem.value.idMeal);
+  }
+};
+
+const decrementQuantity = () => {
+  if (cartItem.value) {
+    store.dispatch("decrementQuantity", cartItem.value.idMeal);
+  }
 };
 </script>
 
 <template>
   <div class="flex flex-col items-center p-6 min-h-screen bg-gray-50 mt-4">
+    <!-- Show Loader While Fetching -->
     <div v-if="isLoading" class="mt-8">
       <Loader :visible="isLoading" />
     </div>
 
+    <!-- Meal Details -->
     <div
       v-else
       class="w-full max-w-4xl bg-white shadow-lg rounded-lg overflow-hidden"
@@ -52,7 +70,6 @@ const addToCart = (meal) => {
         class="w-full h-64 object-cover"
       />
 
-      <!-- Meal Information -->
       <div class="p-6">
         <h1 class="text-2xl font-bold text-gray-800 mb-4">
           {{ meal.strMeal }}
@@ -76,17 +93,37 @@ const addToCart = (meal) => {
           </p>
         </div>
 
+        <!-- Cart Buttons -->
         <div class="mt-4 flex space-x-4">
+          <!-- If item not in cart, show Add to Cart -->
           <button
-            @click="addToCart(meal)"
+            v-if="!cartItem"
+            @click="addToCart"
             class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
           >
             Add to Cart
           </button>
+
+          <!-- If item is in cart, show increment/decrement buttons -->
+          <div v-else class="flex items-center space-x-6">
+            <button
+              @click="decrementQuantity"
+              class="bg-red-600 w-20 text-[20px] text-white py-[2px] px-3 rounded hover:bg-red-700 transition"
+            >
+              -
+            </button>
+            <span class="text-lg font-semibold text-gray-800">
+              {{ cartItem.quantity }}
+            </span>
+            <button
+              @click="incrementQuantity"
+              class="bg-green-600 w-20 text-[20px] text-white py-[2px] px-3 rounded hover:bg-green-700 transition"
+            >
+              +
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
-
-<style scoped></style>
