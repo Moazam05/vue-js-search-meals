@@ -4,6 +4,8 @@ import Home from "../views/Home/index.vue";
 import MealsByLetter from "../views/MealsList/components/MealsByLetter.vue";
 import MealsByName from "../views/MealsList/components/MealsByName.vue";
 import MealDetails from "../views/MealsList/components/MealDetails.vue";
+import Login from "../views/Auth/Login.vue";
+import Signup from "../views/Auth/Signup.vue";
 
 const routes = [
   {
@@ -25,6 +27,16 @@ const routes = [
     path: "/meal/:id",
     name: "mealDetails",
     component: MealDetails,
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+  },
+  {
+    path: "/signup",
+    name: "Signup",
+    component: Signup,
   },
 ];
 
