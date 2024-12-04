@@ -48,7 +48,7 @@ const goToLogin = () => {
             label="Full Name"
             placeholder="Enter your full name"
             required
-            class="mb-2 pa-0"
+            class="mb-2"
           ></v-text-field>
 
           <v-text-field
@@ -57,7 +57,7 @@ const goToLogin = () => {
             label="Email"
             placeholder="Enter your email"
             required
-            class="mb-2 pa-0"
+            class="mb-2"
           ></v-text-field>
 
           <v-text-field
@@ -67,7 +67,7 @@ const goToLogin = () => {
             type="password"
             placeholder="Enter your password"
             required
-            class="mb-2 pa-0"
+            class="mb-2"
           ></v-text-field>
 
           <v-btn :disabled="!valid" @click="signup" color="primary mt-8" block>
@@ -86,7 +86,8 @@ const goToLogin = () => {
 </template>
 
 <style scoped>
-.v-text-field .v-input__details {
-  padding: 0 !important;
+::v-deep(.v-input__details) {
+  padding: 0px !important;
+  margin-bottom: 0px !important;
 }
 </style>

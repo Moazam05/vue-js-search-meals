@@ -74,7 +74,8 @@ const goToSignup = () => {
 </template>
 
 <style scoped>
-.v-text-field .v-input__details {
-  padding: 0 !important;
+::v-deep(.v-input__details) {
+  padding: 0px !important;
+  margin-bottom: 0px !important;
 }
 </style>
