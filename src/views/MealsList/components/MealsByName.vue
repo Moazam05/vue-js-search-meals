@@ -56,13 +56,22 @@ const isInCart = (meal) =>
   <div class="flex flex-col items-center min-h-screen bg-gray-50">
     <!-- Search Input -->
     <div class="w-full max-w-lg p-8">
-      <input
-        type="text"
-        class="rounded border-2 border-gray-300 w-full py-2 px-4 text-gray-700"
-        placeholder="Enter meal name & press Enter"
-        v-model="keyword"
-        @change="searchMeals"
-      />
+      <v-card class="mx-auto" color="surface-light" max-width="400">
+        <v-card-text>
+          <v-text-field
+            :loading="isLoading"
+            append-inner-icon="mdi-magnify"
+            density="compact"
+            label="Search templates"
+            placeholder="Enter meal name & press Enter"
+            variant="solo"
+            hide-details
+            single-line
+            v-model="keyword"
+            @change="searchMeals"
+          ></v-text-field>
+        </v-card-text>
+      </v-card>
     </div>
 
     <!-- Loader -->
