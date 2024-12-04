@@ -64,6 +64,7 @@ const isInCart = (meal) =>
             density="compact"
             label="Search templates"
             placeholder="Enter meal name & press Enter"
+            persistent-placeholder
             variant="solo"
             hide-details
             single-line
