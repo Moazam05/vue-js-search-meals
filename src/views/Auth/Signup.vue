@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
+
 import Snackbar from "../../components/Snackbar/index.vue";
 
 // Vue Router and Vuex store
@@ -26,6 +27,12 @@ const passwordRules = [
   (v) => (v && v.length >= 6) || "Password must be at least 6 characters long",
 ];
 
+const showSnackbar = (message, type = "success") => {
+  snackbar.value.setMessage(message);
+  snackbar.value.setType(type);
+  snackbar.value.show();
+};
+
 // Signup function
 const signup = () => {
   if (valid.value) {
@@ -38,12 +45,11 @@ const signup = () => {
 
     store.dispatch("addUser", payload);
 
-    snackbar.value.show();
+    showSnackbar("User created successfully", "success");
 
-    // Optionally navigate to login page after a delay
-    // setTimeout(() => {
-    //   router.push("/login");
-    // }, 3000);
+    setTimeout(() => {
+      router.push("/login");
+    }, 3000);
   }
 };
 
@@ -107,10 +113,8 @@ const goToLogin = () => {
       </v-card-actions>
     </v-card>
 
-    <!-- Success Snackbar -->
-    <Snackbar ref="snackbar" type="success">
-      <template #message>User created successfully!</template>
-    </Snackbar>
+    <!-- Snackbar Component -->
+    <Snackbar ref="snackbar" />
   </div>
 </template>
 

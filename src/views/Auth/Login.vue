@@ -1,12 +1,17 @@
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+
+import Snackbar from "../../components/Snackbar/index.vue";
 
 const router = useRouter();
+const store = useStore();
 
 const valid = ref(false);
 const email = ref("");
 const password = ref("");
+const snackbar = ref(null);
 
 const emailRules = [
   (v) => !!v || "Email is required",
@@ -18,10 +23,29 @@ const passwordRules = [
   (v) => (v && v.length >= 6) || "Password must be at least 6 characters long",
 ];
 
+const usersList = computed(() => store.getters.users);
+
+const showSnackbar = (message, type = "success") => {
+  snackbar.value.setMessage(message);
+  snackbar.value.setType(type);
+  snackbar.value.show();
+};
+
 const login = () => {
   if (valid.value) {
-    // Handle the login logic here (e.g., authentication API call)
-    // console.log("Logging in with", email.value, password.value);
+    // check if the user exists
+    const user = usersList.value.find((user) => user.email === email.value);
+    if (!user) {
+      showSnackbar("User not found", "error");
+      return;
+    }
+    // if the user exists, check the password
+    if (user.password === password.value) {
+      showSnackbar("Login successful!", "success");
+      router.push("/");
+    } else {
+      showSnackbar("Incorrect password", "warning");
+    }
   }
 };
 
@@ -70,6 +94,9 @@ const goToSignup = () => {
         >
       </v-card-actions>
     </v-card>
+
+    <!-- Snackbar Component -->
+    <Snackbar ref="snackbar" />
   </div>
 </template>
 

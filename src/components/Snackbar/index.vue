@@ -4,11 +4,10 @@
     :timeout="timeout"
     :color="computedColor"
     :elevation="elevation"
-    :multi-line="multiLine"
     location="right"
     position="top"
   >
-    <slot name="message">Default Snackbar Message</slot>
+    <span>{{ currentMessage }}</span>
   </v-snackbar>
 </template>
 
@@ -20,28 +19,21 @@ export default {
       type: Number,
       default: 2000,
     },
-    type: {
-      type: String,
-      default: "success", // Types: 'success', 'warning', 'error'
-      validator: (value) => ["success", "warning", "error"].includes(value),
-    },
     elevation: {
       type: [Number, String],
       default: 24,
-    },
-    multiLine: {
-      type: Boolean,
-      default: false,
     },
   },
   data() {
     return {
       isVisible: false,
+      currentMessage: "Default Snackbar Message",
+      currentType: "success", // Types: 'success', 'warning', 'error'
     };
   },
   computed: {
     computedColor() {
-      switch (this.type) {
+      switch (this.currentType) {
         case "success":
           return "green darken-2"; // Success color
         case "warning":
@@ -59,6 +51,12 @@ export default {
     },
     hide() {
       this.isVisible = false;
+    },
+    setMessage(message) {
+      this.currentMessage = message;
+    },
+    setType(type) {
+      this.currentType = type;
     },
   },
 };
