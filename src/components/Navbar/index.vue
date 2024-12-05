@@ -25,15 +25,22 @@ const cartItemCount = computed(() => store.getters.cartItemCount || 0);
       <div class="flex space-x-4">
         <button
           @click="navigate('/name')"
-          class="hover:bg-blue-700 px-4 py-2 rounded transition"
+          class="hover:bg-blue-700 px-2 py-2 rounded transition"
         >
           Search Meals
         </button>
         <button
           @click="navigate('/letter')"
-          class="hover:bg-blue-700 px-4 py-2 rounded transition"
+          class="hover:bg-blue-700 px-2 py-2 rounded transition"
         >
           Meals By Letter
+        </button>
+
+        <button
+          @click="navigate('/login')"
+          class="hover:bg-blue-700 px-2 py-2 rounded transition"
+        >
+          Login
         </button>
 
         <div

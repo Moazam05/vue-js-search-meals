@@ -21,7 +21,7 @@ const passwordRules = [
 const login = () => {
   if (valid.value) {
     // Handle the login logic here (e.g., authentication API call)
-    console.log("Logging in with", email.value, password.value);
+    // console.log("Logging in with", email.value, password.value);
   }
 };
 

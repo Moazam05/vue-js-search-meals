@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
+import Snackbar from "../../components/Snackbar/index.vue";
 
 const router = useRouter();
 const store = useStore();
@@ -10,6 +11,7 @@ const valid = ref(false);
 const name = ref("");
 const email = ref("");
 const password = ref("");
+const snackbar = ref(null);
 
 const nameRules = [(v) => !!v || "Name is required"];
 
@@ -33,6 +35,10 @@ const signup = () => {
     };
 
     store.dispatch("addUser", payload);
+    snackbar.value.show();
+    // setTimeout(() => {
+    //   router.push("/login");
+    // }, 2000);
   }
 };
 
@@ -90,6 +96,11 @@ const goToLogin = () => {
         >
       </v-card-actions>
     </v-card>
+
+    <!-- Snackbar Component -->
+    <Snackbar ref="snackbar">
+      <template #message> User created successfully! </template>
+    </Snackbar>
   </div>
 </template>
 
