@@ -13,3 +13,7 @@ export const incrementQuantity = ({ commit }, productId) => {
 export const decrementQuantity = ({ commit }, productId) => {
   commit("DECREMENT_QUANTITY", productId);
 };
+
+export const addUser = ({ commit }, user) => {
+  commit("ADD_USER", user);
+};

@@ -1,8 +1,10 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 
 const router = useRouter();
+const store = useStore();
 
 const valid = ref(false);
 const name = ref("");
@@ -23,8 +25,14 @@ const passwordRules = [
 
 const signup = () => {
   if (valid.value) {
-    // Handle the signup logic here (e.g., registration API call)
-    console.log("Signing up with", name.value, email.value, password.value);
+    const payload = {
+      id: new Date().getTime(),
+      name: name.value,
+      email: email.value,
+      password: password.value,
+    };
+
+    store.dispatch("addUser", payload);
   }
 };
 

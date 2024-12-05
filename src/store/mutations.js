@@ -39,3 +39,19 @@ export const DECREMENT_QUANTITY = (state, productId) => {
 
   localStorage.setItem("cart", JSON.stringify(state.cart));
 };
+
+export const ADD_USER = (state, user) => {
+  const existingUser = state.users.find((item) => item.email === user.email);
+
+  if (state.users.length === 0) {
+    state.users.push(user);
+
+    localStorage.setItem("users", JSON.stringify(state.users));
+  } else if (!existingUser) {
+    state.users.push(user);
+
+    localStorage.setItem("users", JSON.stringify(state.users));
+  } else {
+    console.warn("User already exists.");
+  }
+};
