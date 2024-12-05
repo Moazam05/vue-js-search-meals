@@ -5,6 +5,7 @@
     :color="computedColor"
     :elevation="elevation"
     :multi-line="multiLine"
+    location="right"
     position="top"
   >
     <slot name="message">Default Snackbar Message</slot>
