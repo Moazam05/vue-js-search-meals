@@ -17,3 +17,7 @@ export const decrementQuantity = ({ commit }, productId) => {
 export const addUser = ({ commit }, user) => {
   commit("ADD_USER", user);
 };
+
+export const loginUser = ({ commit }, user) => {
+  commit("LOGIN_USER", user);
+};

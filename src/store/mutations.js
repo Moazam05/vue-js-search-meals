@@ -55,3 +55,9 @@ export const ADD_USER = (state, user) => {
     console.warn("User already exists.");
   }
 };
+
+export const LOGIN_USER = (state, user) => {
+  state.loginUser = user;
+
+  localStorage.setItem("loginUser", JSON.stringify(state.loginUser));
+};

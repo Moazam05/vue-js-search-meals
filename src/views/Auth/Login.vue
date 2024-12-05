@@ -33,16 +33,20 @@ const showSnackbar = (message, type = "success") => {
 
 const login = () => {
   if (valid.value) {
-    // check if the user exists
     const user = usersList.value.find((user) => user.email === email.value);
+
     if (!user) {
       showSnackbar("User not found", "error");
       return;
     }
     // if the user exists, check the password
     if (user.password === password.value) {
-      showSnackbar("Login successful!", "success");
-      router.push("/");
+      store.dispatch("loginUser", user);
+      showSnackbar("Logged in successfully", "success");
+
+      setTimeout(() => {
+        router.push("/");
+      }, 2000);
     } else {
       showSnackbar("Incorrect password", "warning");
     }

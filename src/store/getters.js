@@ -5,3 +5,5 @@ export const cartItemCount = (state) => {
 };
 
 export const users = (state) => state.users;
+
+export const loginUser = (state) => state.loginUser;
