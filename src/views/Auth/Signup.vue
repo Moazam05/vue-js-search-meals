@@ -4,27 +4,29 @@ import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import Snackbar from "../../components/Snackbar/index.vue";
 
+// Vue Router and Vuex store
 const router = useRouter();
 const store = useStore();
 
+// Form state
 const valid = ref(false);
 const name = ref("");
 const email = ref("");
 const password = ref("");
 const snackbar = ref(null);
 
+// Validation rules
 const nameRules = [(v) => !!v || "Name is required"];
-
 const emailRules = [
   (v) => !!v || "Email is required",
   (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
 ];
-
 const passwordRules = [
   (v) => !!v || "Password is required",
   (v) => (v && v.length >= 6) || "Password must be at least 6 characters long",
 ];
 
+// Signup function
 const signup = () => {
   if (valid.value) {
     const payload = {
@@ -35,13 +37,17 @@ const signup = () => {
     };
 
     store.dispatch("addUser", payload);
+
     snackbar.value.show();
+
+    // Optionally navigate to login page after a delay
     // setTimeout(() => {
     //   router.push("/login");
-    // }, 2000);
+    // }, 3000);
   }
 };
 
+// Navigate to login page
 const goToLogin = () => {
   router.push("/login");
 };
@@ -56,6 +62,7 @@ const goToLogin = () => {
 
       <v-card-text>
         <v-form v-model="valid" ref="form" lazy-validation>
+          <!-- Name Field -->
           <v-text-field
             v-model="name"
             :rules="nameRules"
@@ -65,6 +72,7 @@ const goToLogin = () => {
             class="mb-2"
           ></v-text-field>
 
+          <!-- Email Field -->
           <v-text-field
             v-model="email"
             :rules="emailRules"
@@ -74,6 +82,7 @@ const goToLogin = () => {
             class="mb-2"
           ></v-text-field>
 
+          <!-- Password Field -->
           <v-text-field
             v-model="password"
             :rules="passwordRules"
@@ -84,6 +93,7 @@ const goToLogin = () => {
             class="mb-2"
           ></v-text-field>
 
+          <!-- Sign Up Button -->
           <v-btn :disabled="!valid" @click="signup" color="primary mt-8" block>
             Sign Up
           </v-btn>
@@ -97,9 +107,9 @@ const goToLogin = () => {
       </v-card-actions>
     </v-card>
 
-    <!-- Snackbar Component -->
-    <Snackbar ref="snackbar">
-      <template #message> User created successfully! </template>
+    <!-- Success Snackbar -->
+    <Snackbar ref="snackbar" type="success">
+      <template #message>User created successfully!</template>
     </Snackbar>
   </div>
 </template>

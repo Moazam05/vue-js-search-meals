@@ -1,3 +1,16 @@
+<template>
+  <v-snackbar
+    v-model="isVisible"
+    :timeout="timeout"
+    :color="computedColor"
+    :elevation="elevation"
+    :multi-line="multiLine"
+    position="top"
+  >
+    <slot name="message">Default Snackbar Message</slot>
+  </v-snackbar>
+</template>
+
 <script>
 export default {
   name: "Snackbar",
@@ -6,9 +19,10 @@ export default {
       type: Number,
       default: 2000,
     },
-    color: {
+    type: {
       type: String,
-      default: "deep-purple-accent-4",
+      default: "success", // Types: 'success', 'warning', 'error'
+      validator: (value) => ["success", "warning", "error"].includes(value),
     },
     elevation: {
       type: [Number, String],
@@ -18,27 +32,25 @@ export default {
       type: Boolean,
       default: false,
     },
-    top: {
-      type: Boolean,
-      default: false,
-    },
-    bottom: {
-      type: Boolean,
-      default: false,
-    },
-    left: {
-      type: Boolean,
-      default: false,
-    },
-    right: {
-      type: Boolean,
-      default: true,
-    },
   },
   data() {
     return {
       isVisible: false,
     };
+  },
+  computed: {
+    computedColor() {
+      switch (this.type) {
+        case "success":
+          return "green darken-2"; // Success color
+        case "warning":
+          return "amber darken-2"; // Warning color
+        case "error":
+          return "red darken-2"; // Error color
+        default:
+          return "deep-purple-accent-4"; // Default color
+      }
+    },
   },
   methods: {
     show() {
@@ -50,21 +62,5 @@ export default {
   },
 };
 </script>
-
-<template>
-  <v-snackbar
-    v-model="isVisible"
-    :timeout="timeout"
-    :color="color"
-    :elevation="elevation"
-    :multi-line="multiLine"
-    :top="top"
-    :bottom="bottom"
-    :left="left"
-    :right="right"
-  >
-    <slot name="message">Default Snackbar Message</slot>
-  </v-snackbar>
-</template>
 
 <style scoped></style>
