@@ -10,7 +10,7 @@ const navigate = (path) => {
   router.push(path);
 };
 
-const cartItemCount = computed(() => store.getters.cartItemCount || 0);
+const cartItemCount = computed(() => store.getters.cartItems);
 const loginUser = computed(() => store.getters.loginUser);
 
 const logout = () => {
@@ -72,10 +72,10 @@ const logout = () => {
 
           <!-- Badge for item count -->
           <span
-            v-if="cartItemCount > 0"
+            v-if="cartItemCount?.length > 0"
             class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full"
           >
-            {{ cartItemCount }}
+            {{ cartItemCount?.length }}
           </span>
         </div>
       </div>
