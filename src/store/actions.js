@@ -21,3 +21,7 @@ export const addUser = ({ commit }, user) => {
 export const loginUser = ({ commit }, user) => {
   commit("LOGIN_USER", user);
 };
+
+export const logoutUser = ({ commit }) => {
+  commit("LOGOUT_USER");
+};

@@ -12,6 +12,11 @@ const navigate = (path) => {
 
 const cartItemCount = computed(() => store.getters.cartItemCount || 0);
 const loginUser = computed(() => store.getters.loginUser);
+
+const logout = () => {
+  store.dispatch("logoutUser");
+  router.push("/");
+};
 </script>
 
 <template>
@@ -38,21 +43,21 @@ const loginUser = computed(() => store.getters.loginUser);
         </button>
 
         <button
-          v-if="!loginUser"
+          v-if="!loginUser.name"
           @click="navigate('/login')"
           class="hover:bg-blue-700 px-2 py-2 rounded transition"
         >
           Login
         </button>
 
-        <v-menu v-if="loginUser">
+        <v-menu v-if="loginUser.name">
           <template v-slot:activator="{ props }">
             <div v-bind="props" class="px-2 py-2">
               {{ loginUser?.name }}
             </div>
           </template>
           <v-list style="padding: 0">
-            <v-list-item>
+            <v-list-item @click="logout">
               <v-icon size="20" class="me-2">mdi-logout</v-icon>
               <v-list-item-title>Logout</v-list-item-title>
             </v-list-item>

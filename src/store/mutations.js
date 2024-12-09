@@ -61,3 +61,9 @@ export const LOGIN_USER = (state, user) => {
 
   localStorage.setItem("loginUser", JSON.stringify(state.loginUser));
 };
+
+export const LOGOUT_USER = (state) => {
+  state.loginUser = {};
+
+  localStorage.setItem("loginUser", JSON.stringify(state.loginUser));
+};
