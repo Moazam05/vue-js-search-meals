@@ -2,18 +2,19 @@
 import { onMounted, ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
-
 import axiosClient from "../../../api/axiosClient";
 import Loader from "../../../components/Loader/index.vue";
+import ReusableDialog from "../../../components/ReusableDialog/index.vue";
 
 const route = useRoute();
 const store = useStore();
 
-// <!-- todo: State -->
+// State
 const meal = ref(null);
 const isLoading = ref(true);
+const isDialogOpen = ref(false);
 
-// <!-- todo: Fetch Meal API -->
+// Fetch Meal API
 onMounted(async () => {
   try {
     isLoading.value = true;
@@ -26,10 +27,8 @@ onMounted(async () => {
   }
 });
 
-// <!-- todo: VUEX -->
+// VUEX
 const cartItems = computed(() => store.getters.cartItems);
-
-// Check if the current meal is in the cart
 const cartItem = computed(() =>
   cartItems.value.find((item) => item.idMeal === meal.value?.idMeal)
 );
@@ -39,16 +38,8 @@ const addToCart = () => {
   store.dispatch("addToCart", meal.value);
 };
 
-const incrementQuantity = () => {
-  if (cartItem.value) {
-    store.dispatch("incrementQuantity", cartItem.value.idMeal);
-  }
-};
-
-const decrementQuantity = () => {
-  if (cartItem.value) {
-    store.dispatch("decrementQuantity", cartItem.value.idMeal);
-  }
+const openDialog = () => {
+  isDialogOpen.value = true;
 };
 </script>
 
@@ -103,6 +94,19 @@ const decrementQuantity = () => {
           >
             Add to Cart
           </button>
+
+          <div v-if="!cartItem">
+            <button @click="openDialog">Open Dialog</button>
+            <ReusableDialog
+              v-model="isDialogOpen"
+              title="Login Alert"
+              close-button-text="Close Me"
+            >
+              <template v-slot:content>
+                <p>This is some dialog content.</p>
+              </template>
+            </ReusableDialog>
+          </div>
 
           <!-- If item is in cart, show increment/decrement buttons -->
           <div v-else class="flex items-center space-x-6">
