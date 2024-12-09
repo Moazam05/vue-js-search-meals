@@ -11,6 +11,7 @@ const navigate = (path) => {
 };
 
 const cartItemCount = computed(() => store.getters.cartItemCount || 0);
+const loginUser = computed(() => store.getters.loginUser);
 </script>
 
 <template>
@@ -37,11 +38,26 @@ const cartItemCount = computed(() => store.getters.cartItemCount || 0);
         </button>
 
         <button
+          v-if="!loginUser"
           @click="navigate('/login')"
           class="hover:bg-blue-700 px-2 py-2 rounded transition"
         >
           Login
         </button>
+
+        <v-menu v-if="loginUser">
+          <template v-slot:activator="{ props }">
+            <div v-bind="props" class="px-2 py-2">
+              {{ loginUser?.name }}
+            </div>
+          </template>
+          <v-list style="padding: 0">
+            <v-list-item>
+              <v-icon size="20" class="me-2">mdi-logout</v-icon>
+              <v-list-item-title>Logout</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
 
         <div
           class="relative flex items-center cursor-pointer hover:text-blue-300 transition"
@@ -62,4 +78,9 @@ const cartItemCount = computed(() => store.getters.cartItemCount || 0);
   </nav>
 </template>
 
-<style scoped></style>
+<style scoped>
+::v-deep(.v-list-item__content) {
+  display: flex !important;
+  align-items: center !important;
+}
+</style>
