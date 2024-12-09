@@ -6,6 +6,7 @@ import MealsByName from "../views/MealsList/components/MealsByName.vue";
 import MealDetails from "../views/MealsList/components/MealDetails.vue";
 import Login from "../views/Auth/Login.vue";
 import Signup from "../views/Auth/Signup.vue";
+import Cart from "../views/Cart/index.vue";
 
 const routes = [
   {
@@ -37,6 +38,11 @@ const routes = [
     path: "/signup",
     name: "Signup",
     component: Signup,
+  },
+  {
+    path: "/cart",
+    name: "Cart",
+    component: Cart,
   },
 ];
 

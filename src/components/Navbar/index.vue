@@ -66,6 +66,7 @@ const logout = () => {
 
         <div
           class="relative flex items-center cursor-pointer hover:text-blue-300 transition"
+          @click="router.push('/cart')"
         >
           <!-- Cart Icon -->
           <i class="pi pi-shopping-cart text-2xl"></i>
