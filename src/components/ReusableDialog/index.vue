@@ -1,15 +1,14 @@
 <template>
-  <v-dialog v-model="isDialogOpen" :max-width="maxWidth">
+  <v-dialog v-model="isDialogOpen" :max-width="maxWidth" persistent>
     <v-card>
-      <v-card-title>{{ title }}</v-card-title>
+      <v-card-title class="d-flex justify-space-between items-center">
+        {{ title }}
+        <v-icon @click="closeDialog" size="23">mdi-close</v-icon>
+      </v-card-title>
+
       <v-card-text>
         <slot name="content"></slot>
       </v-card-text>
-
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn text @click="closeDialog">{{ closeButtonText }}</v-btn>
-      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>

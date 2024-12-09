@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref, computed } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 import axiosClient from "../../../api/axiosClient";
 import Loader from "../../../components/Loader/index.vue";
@@ -8,6 +8,7 @@ import ReusableDialog from "../../../components/ReusableDialog/index.vue";
 
 const route = useRoute();
 const store = useStore();
+const router = useRouter();
 
 // State
 const meal = ref(null);
@@ -32,10 +33,26 @@ const cartItems = computed(() => store.getters.cartItems);
 const cartItem = computed(() =>
   cartItems.value.find((item) => item.idMeal === meal.value?.idMeal)
 );
+const loginUser = computed(() => store.getters.loginUser);
+
+const incrementQuantity = () => {
+  if (cartItem.value) {
+    store.dispatch("incrementQuantity", cartItem.value.idMeal);
+  }
+};
+const decrementQuantity = () => {
+  if (cartItem.value) {
+    store.dispatch("decrementQuantity", cartItem.value.idMeal);
+  }
+};
 
 // Cart Actions
 const addToCart = () => {
-  store.dispatch("addToCart", meal.value);
+  if (loginUser.value.name) {
+    store.dispatch("addToCart", meal.value);
+  } else {
+    openDialog();
+  }
 };
 
 const openDialog = () => {
@@ -96,14 +113,27 @@ const openDialog = () => {
           </button>
 
           <div v-if="!cartItem">
-            <button @click="openDialog">Open Dialog</button>
-            <ReusableDialog
-              v-model="isDialogOpen"
-              title="Login Alert"
-              close-button-text="Close Me"
-            >
+            <ReusableDialog v-model="isDialogOpen" title="Login Alert">
               <template v-slot:content>
-                <p>This is some dialog content.</p>
+                <div>
+                  <p class="text-gray-600">
+                    You need to login to add items to the cart.
+                  </p>
+                  <div class="mt-8 flex justify-end gap-8">
+                    <button
+                      @click="router.push('/signup')"
+                      class="bg-red-600 text-white py-1 px-4 rounded hover:bg-red-700 transition"
+                    >
+                      Sign Up
+                    </button>
+                    <button
+                      @click="router.push('/login')"
+                      class="bg-green-600 text-white py-1 px-4 rounded hover:bg-green-700 transition"
+                    >
+                      Login
+                    </button>
+                  </div>
+                </div>
               </template>
             </ReusableDialog>
           </div>
