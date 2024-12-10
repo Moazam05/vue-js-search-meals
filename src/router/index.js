@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { computed } from "vue";
 
 import store from "../store";
 
@@ -62,11 +61,18 @@ router.beforeEach((to, from, next) => {
   const isAuthenticated = !!store.state.loginUser; // Convert to boolean (true if user exists)
 
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+  const isPublicRoute = ["Login", "Signup"].includes(to.name); // Define public-only routes
+
+  console.log("requiresAuth: ", requiresAuth);
 
   if (requiresAuth && !isAuthenticated) {
-    next({ name: "home" });
+    // If route requires auth and user is not authenticated
+    next({ name: "Login" });
+  } else if (isAuthenticated && isPublicRoute) {
+    // If user is authenticated and trying to access public-only routes
+    next({ name: "home" }); // Redirect to home or any other default private route
   } else {
-    next();
+    next(); // Proceed to the route
   }
 });
 
