@@ -54,6 +54,9 @@ const routes = [
     path: "/admin",
     name: "Admin",
     component: Admin,
+    meta: {
+      requiresAdmin: true, // Only users with roles [3] can access
+    },
   },
 ];
 
@@ -64,19 +67,27 @@ const router = createRouter({
 
 // Navigation Guards
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = !!store.state.loginUser; // Convert to boolean (true if user exists)
+  const loginUser = store.state.loginUser;
+  const isAuthenticated = !!loginUser; // Convert to boolean
+  const userRoles = loginUser?.roles || []; // Get user roles or default to empty array
 
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+  const requiresAdmin = to.matched.some((record) => record.meta.requiresAdmin);
+
   const isPublicRoute = ["Login", "Signup"].includes(to.name); // Define public-only routes
 
   if (requiresAuth && !isAuthenticated) {
-    // If route requires auth and user is not authenticated
+    // Redirect to login if route requires authentication and user is not authenticated
     next({ name: "Login" });
   } else if (isAuthenticated && isPublicRoute) {
-    // If user is authenticated and trying to access public-only routes
-    next({ name: "home" }); // Redirect to home or any other default private route
+    // Redirect authenticated users away from public routes
+    next({ name: "home" });
+  } else if (requiresAdmin && !userRoles.includes(3)) {
+    // Redirect to home if user tries to access admin route without admin role
+    next({ name: "home" });
   } else {
-    next(); // Proceed to the route
+    // Allow access otherwise
+    next();
   }
 });
 

@@ -45,6 +45,10 @@ const login = () => {
       user.roles = [3];
     }
 
+    if (user.email === "faizan@gmail.com") {
+      user.roles = [2];
+    }
+
     // Check password
     if (user.password === password.value) {
       store.dispatch("loginUser", user);
