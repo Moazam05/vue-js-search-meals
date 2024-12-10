@@ -9,6 +9,7 @@ import MealDetails from "../views/MealsList/components/MealDetails.vue";
 import Login from "../views/Auth/Login.vue";
 import Signup from "../views/Auth/Signup.vue";
 import Cart from "../views/Cart/index.vue";
+import Admin from "../views/Admin/index.vue";
 
 const routes = [
   {
@@ -49,6 +50,11 @@ const routes = [
       requiresAuth: true,
     },
   },
+  {
+    path: "/admin",
+    name: "Admin",
+    component: Admin,
+  },
 ];
 
 const router = createRouter({
@@ -62,8 +68,6 @@ router.beforeEach((to, from, next) => {
 
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
   const isPublicRoute = ["Login", "Signup"].includes(to.name); // Define public-only routes
-
-  console.log("requiresAuth: ", requiresAuth);
 
   if (requiresAuth && !isAuthenticated) {
     // If route requires auth and user is not authenticated
