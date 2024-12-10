@@ -39,7 +39,13 @@ const login = () => {
       showSnackbar("User not found", "error");
       return;
     }
-    // if the user exists, check the password
+
+    // Assign roles to user if email is salman@gmail.com
+    if (user.email === "salman@gmail.com") {
+      user.roles = [3];
+    }
+
+    // Check password
     if (user.password === password.value) {
       store.dispatch("loginUser", user);
       showSnackbar("Logged in successfully", "success");
