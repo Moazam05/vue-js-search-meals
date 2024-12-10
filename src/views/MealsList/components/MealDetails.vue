@@ -48,7 +48,7 @@ const decrementQuantity = () => {
 
 // Cart Actions
 const addToCart = () => {
-  if (loginUser.value.name) {
+  if (loginUser?.value?.name) {
     store.dispatch("addToCart", meal.value);
   } else {
     openDialog();

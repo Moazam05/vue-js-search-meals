@@ -1,4 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { computed } from "vue";
+
+import store from "../store";
 
 import Home from "../views/Home/index.vue";
 import MealsByLetter from "../views/MealsList/components/MealsByLetter.vue";
@@ -43,12 +46,28 @@ const routes = [
     path: "/cart",
     name: "Cart",
     component: Cart,
+    meta: {
+      requiresAuth: true,
+    },
   },
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+// Navigation Guards
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = !!store.state.loginUser; // Convert to boolean (true if user exists)
+
+  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+
+  if (requiresAuth && !isAuthenticated) {
+    next({ name: "home" });
+  } else {
+    next();
+  }
 });
 
 export default router;

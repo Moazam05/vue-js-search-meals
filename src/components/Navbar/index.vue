@@ -43,14 +43,14 @@ const logout = () => {
         </button>
 
         <button
-          v-if="!loginUser.name"
+          v-if="!loginUser?.name"
           @click="navigate('/login')"
           class="hover:bg-blue-700 px-2 py-2 rounded transition"
         >
           Login
         </button>
 
-        <v-menu v-if="loginUser.name">
+        <v-menu v-if="loginUser?.name">
           <template v-slot:activator="{ props }">
             <div v-bind="props" class="px-2 py-2">
               {{ loginUser?.name }}

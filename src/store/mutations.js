@@ -63,7 +63,7 @@ export const LOGIN_USER = (state, user) => {
 };
 
 export const LOGOUT_USER = (state) => {
-  state.loginUser = {};
+  state.loginUser = null;
 
   localStorage.setItem("loginUser", JSON.stringify(state.loginUser));
 };
